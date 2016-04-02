@@ -1,8 +1,8 @@
-### Basic Project2
+### Pet Registration Project
 
-### March 26
+### April 2
 
-A Basic Structure for Maven Projects
+An application which registered a pet into the pet registering system
 
 * Git
 * Java 7
