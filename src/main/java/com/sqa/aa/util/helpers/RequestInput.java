@@ -223,6 +223,42 @@ public class RequestInput {
 	}
 
 	/**
+	 * @param string
+	 * @param string2
+	 * @param i
+	 * @param j
+	 * @return
+	 */
+	public static int getInt(String question, String unacceptableErrorMessage, int min, int max) {
+
+		String input = null;
+		int resultValue;
+		boolean validInt = false;
+		while (true) {
+			try {
+				System.out.print(question);
+				input = scanner.nextLine();
+				resultValue = Integer.parseInt(input);
+
+				if (resultValue >= min && resultValue <= max) {
+					validInt = true;
+				}
+				if (!validInt) {
+					throw new InvalidAcceptableNumberException();
+				}
+				return resultValue;
+
+			} catch (NumberFormatException e) {
+				System.out.println("You have not provided a valid integer type (" + input + ")");
+				continue;
+			} catch (InvalidAcceptableNumberException e) {
+				String message = String.format(unacceptableErrorMessage, min, max);
+				System.out.println(message);
+			}
+		}
+	}
+
+	/**
 	 * Static Helper Method which asks user specified question and return the
 	 * input to user.
 	 *
@@ -273,4 +309,62 @@ public class RequestInput {
 		}
 	}
 	// Create your own helper method that you may find useful
+
+	/**
+	 * @param string
+	 * @param string2
+	 * @param bird
+	 * @param cat
+	 * @param dog
+	 * @param fish
+	 * @param horse
+	 * @param reptile
+	 * @return
+	 */
+	public static String getString(String question, String cancellationMessage, Enum... acceptableEnum) {
+
+		String input = null;
+		String resultValue;
+		String resultString = "";
+		boolean validWord = false;
+
+		while (true) {
+			try {
+				System.out.print(question);
+				input = scanner.nextLine();
+				resultValue = input;
+
+				for (int i = 0; i < acceptableEnum.length; i++) {
+					if (resultValue.trim().equalsIgnoreCase(acceptableEnum[i].toString())) {
+						validWord = true;
+						resultString += acceptableEnum[i].toString();
+					}
+				}
+				if (!validWord) {
+					throw new InvalidAcceptableWordException();
+				}
+				return resultString;
+			} catch (InvalidAcceptableWordException e) {
+				System.out.println("You have not provided an acceptable word (" + input + ")");
+				System.out.print("You must provide one of the following options: ");
+				for (int i = 0; i < acceptableEnum.length; i++) {
+					System.out.print(acceptableEnum[i].toString());
+					if (i != acceptableEnum.length - 1) {
+						System.out.print(", ");
+					}
+				}
+				System.out.println();
+				String message = String.format(cancellationMessage, input);
+				System.out.println(message);
+				System.out.println("If you'd like to cancel, enter '*' or just press enter to continue:");
+				input = scanner.nextLine();
+				if (input.equalsIgnoreCase("*")) {
+
+					return resultString;
+				}
+
+			}
+		}
+
+	}
 }
