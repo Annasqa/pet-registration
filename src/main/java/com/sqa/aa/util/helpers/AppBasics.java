@@ -39,5 +39,4 @@ public class AppBasics {
 		userName = RequestInput.getString("Could I get your name please?");
 		return userName;
 	}
-
 }
